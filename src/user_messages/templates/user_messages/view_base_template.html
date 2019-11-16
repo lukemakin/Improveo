@@ -1,0 +1,45 @@
+{% url 'messages:message-list' as path_all %}
+{% url 'messages:message-list-read' as path_read %}
+{% url 'messages:message-list-unread' as path_unread %}
+{% url 'messages:message-write' as path_write %}
+
+
+<div class="col-8 mx-auto">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-2">
+    <li class="breadcrumb-item">Messages to read : {{messages_undread}}</li>
+    <li class="breadcrumb-item">
+        <a href="{{ path_write }}"><i class="fas fa-envelope mr-2"></i>New message</a>
+    </li> 
+  </ol>
+</nav>
+
+{% for obj in object_list %}
+<div class="card my-2 p-4">
+<small class="text-muted">from: {{obj.message_from}} | send: {{obj.timestamp}}</small>
+<hr>
+
+<small>From: {{ obj.message_from }} | To: {{ obj.message_to }}</small>
+{% if obj.answers.last %}
+{% if obj.answers.last.message_from == profile  %}
+
+<div class="my-2 {% if  obj.new %}font-weight-bold{% else %}text-muted{% endif %}">{{obj.title}} ({{obj.answers.all.count}})</div>
+<div class="mb-2  {% if obj.new %}font-weight-bold{% else %}text-muted{% endif %}">{{obj.body|truncatewords:10}}</div>
+
+{% else %}
+<div class="my-2 {% if  obj.new and obj.answers.first.message_to == profile %}font-weight-bold{% else %}text-muted{% endif %}">{{obj.title}} ({{obj.answers.all.count}})</div>
+<div class="mb-2  {% if obj.new and obj.answers.first.message_to == profile %}font-weight-bold{% else %}text-muted{% endif %}">{{obj.body|truncatewords:10}}</div>
+{% endif %}
+
+{% else %}
+<div class="my-2 {% if  obj.new and obj.message_to == profile %}font-weight-bold{% else %}text-muted{% endif %}">{{obj.title}} ({{obj.answers.all.count}})</div>
+<div class="mb-2  {% if obj.new and obj.message_to == profile %}font-weight-bold{% else %}text-muted{% endif %}">{{obj.body|truncatewords:10}}</div>
+
+{% endif %}
+
+<a href={{obj.get_absolute_url}}><button class="btn btn-primary btn-sm">View message</button></a>
+</div>
+
+{% endfor %}
+</div>
+

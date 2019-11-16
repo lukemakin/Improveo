@@ -1,0 +1,36 @@
+<html>
+ <head>
+   <title>Test</title>
+   
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+    .tg .tg-ly6r{border-color:#efefef;text-align:left;vertical-align:top}
+    </style>
+    <h3>Problems</h3>
+    {% for p in problems %}
+    <p>{{ p.timestamp }}</p>
+    
+    <table class="tg" style="undefined;table-layout: fixed;">
+    <tr>
+        <th class="tg-ly6r">category</th>
+        <th class="tg-ly6r">{{ p.category }}</th>
+    </tr>
+    <tr>
+        <th class="tg-ly6r">description</th>
+        <th class="tg-ly6r">{{ p.description }}</th>
+    </tr>
+    <tr>
+        <th class="tg-ly6r">id</th>
+        <th class="tg-ly6r">{{ p.problem_id }}</th>
+    </tr>
+    <tr>
+        <th class="tg-ly6r">breakdown</th>
+        <th class="tg-ly6r">{{ p.breakdown }}</th>
+    </tr>
+    </table>
+    {% endfor %}
+
+ </body>
+</html>

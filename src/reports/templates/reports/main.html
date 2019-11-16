@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load substract %}
+{% load oknok %}
+{% block title %} prepare
+{% endblock title %}
+
+{% block content %}
+<div class="container bg-white shadow-lg  py-2 font-q rounded">
+<div class="row">
+<div class="col-12">
+<div class="text-muted h2">
+<i class="fas fa-tachometer-alt mr-4"></i>Results
+</div>
+</div>
+
+
+<div class="col">
+<h5>Summary of: <strong>{{ day }}</strong></h5>
+<br>
+
+<table class="table table-sm text-center">
+  <thead>
+    <tr>
+      <th scope="col">Plan</th>
+      <th scope="col">Execution</th>
+      <th scope="col">Difference</th>
+      <th scope="col">OK?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ plan }}</td>
+      <td>{{ execution }}</td>
+      <td>{{ execution|substract:plan }}</td>
+      <td>{{ execution|oknok:plan }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<h3>Problems</h3>
+<hr>
+{% for problem in problems_reported %}
+<small class="text-muted">{{ problem.problem_id }}</small><br>
+{{ problem.category }}<br>
+{{ problem.description }}<br>
+{{ problem.breakdown }} min<br>
+<hr>
+{% endfor %}
+</div>
+
+</div>
+{% endblock content %}

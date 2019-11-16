@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}message{% endblock title %}
+
+{% block content %}
+<div class="col-8 mx-auto">
+
+<div class="card my2">
+<div class="text-muted px-3 py-2">
+    <h4>Message: {{ object.title }}</h4>
+    <hr>
+</div>
+<div class="px-3">
+    <small>From: {{ object.message_from }} | Send: {{ object.timestamp }} </small>
+    <p>{{ object.body }}</p>
+</div>
+
+
+</div>
+
+<div class="card my-2">
+<div class="text-muted px-3 py-2">
+    <h4>Full conversation</h4> 
+    <hr>
+</div>
+<div class="px-3 pb-2">
+{% if not object.answers.all %}
+No answers to this message...
+{% else %}
+{% for obj in object.answers.all  %}
+<div class="p-3 mb-2 w-75 {% if obj.message_to == profile %}bg-success float-left{% else %}bg-primary float-right{% endif %} rounded shadow">
+<div><small>{{ obj.timestamp|timesince }} ago</small></div>
+<div>{{ obj.body }}</div>
+<small>answer to : {{ obj.message_to }}</small> | 
+<small>answer from :{{ obj.message_from }}</small>
+</div>
+
+{% endfor %}
+{% endif %}
+
+</div>
+
+</div>
+
+<div class="card my-2 p-3">
+<form action="." method="POST">
+{% csrf_token %}
+{{ form|crispy }}
+<button type="submit" class="btn btn-primary"> <i class="fas fa-reply mr-2"></i>Reply</button>
+</form>
+</div>
+
+</div>
+{% endblock content %}

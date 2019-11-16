@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}write message{% endblock title %}
+
+{% block content %}
+
+<div class="col-6 mx-auto text-white">
+
+{% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+                {% if 'info' == message.tags %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% elif 'warning' == message.tags %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endif %}
+              
+            {% endfor %}
+        </div>
+{% endif %}
+
+
+
+<h3>Create message {{ message.tags }}</h3>
+<form action="." method="POST">
+{% csrf_token %}
+{{ form|crispy }}
+<button type="submit" class="btn btn-primary">Send</button>
+</form>
+</div>
+{% endblock content %}
+

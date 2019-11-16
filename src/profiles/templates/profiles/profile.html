@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load pic_name %}
+{% block title %} profile
+{% endblock title %}
+
+{% block content %}
+
+<div class="col-9 mx-auto">
+<div class="card p-4">
+
+<div><h4>Edit Profile</h4></div>
+
+<div class="img-thumbnail mx-auto">
+    
+        <img src="{{ object.profile_picture.url }}" class="h-56 w-56 rounded-full" width="200" height="200">
+    
+  </div>
+
+
+    <div><b class="mr-2">Username:</b>{{ object.user.username }}</div>
+    <div><b class="mr-2">Email:</b> {{ object.user.email }}</div>
+    <div><b class="mr-2">Bio:</b> {{ object.bio }}</div>
+    <div><b class="mr-2">Website:</b> {{ object.website }}</div>
+    <div><b class="mr-2">Joined:</b> {{ object.timestamp|date }}</div>
+
+    <br>
+    <div><b class="mr-2">Current picture:</b>{{ object.profile_picture.url|pic_name }} </div>
+  
+    <br><br>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Update profile
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{% url 'profiles:profile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" type="submit">Save changes</button>
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</div>
+    
+</div>
+</div>
+</div>
+
+{% endblock content %}

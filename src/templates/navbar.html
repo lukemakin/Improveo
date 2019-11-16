@@ -1,0 +1,70 @@
+{% load static %}
+{% url 'reports:rv' as path_reports %}
+{% url 'posts:post-list' as path_board %}
+{% url 'messages:message-list' as path_messages %}
+{% url 'profiles:profile' as path_profile %}
+{% url 'reports:home' as path_home %}
+{% url 'reports:pdf' as path_pdf%}
+{% url 'account_login' as path_login %}
+
+
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark black-bg1 border-bottom border-secondary font-q fixed-top">
+<div class="container">
+  <a class="navbar-brand" href="{{ path_home }}">Improveo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item {% if request.path == path_home %}active{% endif %}">
+        <a class="nav-link" href="{{ path_home }}">Home</a>
+      </li>
+      <li class="nav-item {% if request.path == path_board %}active{% endif %}">
+        <a class="nav-link" href="{{ path_board }}">Board</a>
+      </li>
+      <li class="nav-item {% if request.path == path_reports %}active{% endif %}">
+        <a class="nav-link" href="{{ path_reports }}">Get report</a>
+      </li>
+       <li class="nav-item {% if request.path == path_pdf %}active{% endif %}">
+        <a class="nav-link" href="{{ path_pdf }}">Todays PDF</a>
+      </li>        
+    </ul>
+    
+    <ul class="navbar-nav ">
+    {% if request.user.is_authenticated %}
+      <li class="nav-item {% if request.path == path_profile %}active{% endif %}">
+        <a class="nav-link" href="{{ path_profile }}">
+          <img class="img-avatar" src="{{ picture.url }}" alt="Avatar" class="avatar">
+           <span class="ml-2">{{ request.user }}</span>
+      </li>
+      {% endif %}
+      <li class="nav-item {% if request.path == path_messages %}active{% endif %}">
+        <a class="nav-link" href="{{ path_messages }}">
+         <i class="fa fa-envelope-o">
+            <span class="badge badge-info">{{ messages_undread }}</span>
+          </i>
+        </a>
+      </li>
+      {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}"> 
+            <i class="fa fa-power-off"></i>
+        </a>
+      </li>
+      {% else %}
+       <li class="nav-item {% if request.path == path_login %}active{% endif %}">
+       <a class="nav-link" href="{{ path_login }}"> 
+            <i class="fa fa-sign-in-alt"></i>
+        </a>
+       </li>
+      {% endif %}
+  
+
+      
+    </ul>
+
+  </div>
+</div>
+</nav>
+
